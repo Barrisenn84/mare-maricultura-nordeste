@@ -146,6 +146,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       // Seamless offline / static hosting fallback
       const clientAuth = registerClientUser(finalName, finalEmail, 'google_auth_standalone', 'PROPRIETARIO', 'Fazenda Tibau');
       if (clientAuth.session) {
+        sessionStorage.setItem('mare_auth_token', clientAuth.session.token);
         setShowGooglePrompt(false);
         onLoginSuccess(clientAuth.session);
       }
@@ -223,6 +224,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       // Standalone / Vercel fallback
       const clientAuth = loginClientUser(loginEmail.trim(), loginPassword);
       if (clientAuth.session) {
+        sessionStorage.setItem('mare_auth_token', clientAuth.session.token);
         onLoginSuccess(clientAuth.session);
       }
     } catch (err: any) {
@@ -297,6 +299,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       // Standalone / Vercel offline fallback
       const clientAuth = registerClientUser(name, email, password, registerRole, registerUnit);
       if (clientAuth.session) {
+        sessionStorage.setItem('mare_auth_token', clientAuth.session.token);
         setSuccessMsg('Conta criada com sucesso! Carregando Minha Empresa...');
         setTimeout(() => {
           onLoginSuccess(clientAuth.session!);

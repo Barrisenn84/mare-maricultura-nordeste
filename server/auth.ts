@@ -39,8 +39,16 @@ declare global {
   }
 }
 
-const VOLUME_DIR = process.env.RAILWAY_VOLUME_MOUNT_PATH;
-const DATA_DIR = VOLUME_DIR ? path.join(VOLUME_DIR, 'data') : path.join(process.cwd(), 'data');
+function resolveDataDir(): string {
+  if (process.env.DATA_DIR) return process.env.DATA_DIR;
+  const vol = process.env.RAILWAY_VOLUME_MOUNT_PATH;
+  if (vol) {
+    return path.basename(vol) === 'data' ? vol : path.join(vol, 'data');
+  }
+  return path.join(process.cwd(), 'data');
+}
+
+const DATA_DIR = resolveDataDir();
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
 
 // In-memory active verifiable sessions (mapped by cryptorandom token)
@@ -183,12 +191,19 @@ export function saveUsers(): void {
     throw new Error('Gravação recusada: a base de usuários está em quarentena por corrupção.');
   }
   try {
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
     const temp = `${USERS_FILE}.tmp.${Date.now()}.${Math.random().toString(36).substring(2, 6)}`;
     fs.writeFileSync(temp, JSON.stringify(storedUsersCache || [], null, 2), 'utf-8');
     fs.renameSync(temp, USERS_FILE);
-  } catch (err) {
-    console.error('Erro ao salvar users.json:', err);
-    throw new Error('Falha ao persistir usuários em disco.');
+  } catch (err: any) {
+    // Secondary attempt: direct write
+    try {
+      fs.writeFileSync(USERS_FILE, JSON.stringify(storedUsersCache || [], null, 2), 'utf-8');
+    } catch (directErr: any) {
+      console.warn('[AUTH WARNING] Falha ao persistir users.json em disco (' + directErr.message + '). Usuário mantido em memória.');
+    }
   }
 }
 

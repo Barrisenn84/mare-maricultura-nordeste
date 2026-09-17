@@ -84,11 +84,11 @@ export default function App() {
   }, [currentEnv, authenticatedUser]);
 
   // Fetch full state from backend or fallback to local storage
-  const fetchState = useCallback(async (envOverride?: EnvironmentMode) => {
+  const fetchState = useCallback(async (envOverride?: EnvironmentMode, tokenOverride?: string) => {
     const activeEnv = envOverride || currentEnv;
     try {
       setLoading(true);
-      const token = authenticatedUser?.token || sessionStorage.getItem('mare_auth_token');
+      const token = tokenOverride || authenticatedUser?.token || sessionStorage.getItem('mare_auth_token');
       const reqHeaders: Record<string, string> = {
         'x-environment': activeEnv,
       };
@@ -217,11 +217,12 @@ export default function App() {
   };
 
   const handleLoginSuccess = (session: AuthSession) => {
+    sessionStorage.setItem('mare_auth_token', session.token);
     setAuthenticatedUser(session);
     setCurrentRole(session.role);
     setCurrentEnv('real');
     setIsLoginModalOpen(false);
-    fetchState('real');
+    fetchState('real', session.token);
   };
 
   const handleLogout = async () => {
