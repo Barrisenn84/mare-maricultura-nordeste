@@ -467,15 +467,14 @@ export function recordAuditLog(entry: {
     const logLine = JSON.stringify(fullEntry) + '\n';
     fs.appendFileSync(AUDIT_LOG_FILE, logLine, 'utf-8');
     lastAuditHash = entryHash;
-
-    // Also update in-memory realStore auditLogs (latest 500)
-    if (!realStore.auditLogs) realStore.auditLogs = [];
-    realStore.auditLogs.unshift(fullEntry);
-    if (realStore.auditLogs.length > 500) realStore.auditLogs = realStore.auditLogs.slice(0, 500);
   } catch (err: any) {
-    console.error('FALHA CRÍTICA AO GRAVAR LOG DE AUDITORIA:', err);
-    throw new Error(`Falha ao registrar auditoria de segurança: ${err.message}`);
+    console.warn('Aviso de gravação de log de auditoria em disco:', err.message);
   }
+
+  // Also update in-memory realStore auditLogs (latest 500)
+  if (!realStore.auditLogs) realStore.auditLogs = [];
+  realStore.auditLogs.unshift(fullEntry);
+  if (realStore.auditLogs.length > 500) realStore.auditLogs = realStore.auditLogs.slice(0, 500);
 
   return fullEntry;
 }

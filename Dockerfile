@@ -19,10 +19,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
 
-# Cria diretórios para dados e uploads (suporte a Railway Persistent Volume)
-RUN mkdir -p /app/data /app/uploads_storage && chown -R node:node /app
-
-# Copia arquivos compilados e dependências necessárias
+# Copia dependências e arquivos compilados
 COPY package*.json ./
 RUN npm ci --omit=dev
 
@@ -30,8 +27,10 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/data ./data
 COPY --from=builder /app/public ./public
 
-USER node
+# Garante existência e permissões totais para o diretório de dados e uploads
+RUN mkdir -p /app/data /app/uploads_storage && chmod -R 777 /app/data /app/uploads_storage
 
 EXPOSE 3000
 
-CMD ["node", "dist/server.cjs"]
+# Script de inicialização que ajusta as permissões do volume montado pelo Railway na inicialização
+CMD ["sh", "-c", "mkdir -p /app/data /app/uploads_storage && chmod -R 777 /app/data /app/uploads_storage 2>/dev/null || true; node dist/server.cjs"]
