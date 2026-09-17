@@ -1,0 +1,16 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+data/real_store.json
+data/users.json
+data/*.lock
+data/*.tmp
+backups/
+uploads/
+uploads_storage/
+*.zip

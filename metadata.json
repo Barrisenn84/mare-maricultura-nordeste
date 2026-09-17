@@ -1,0 +1,6 @@
+{
+  "name": "Maré — Maricultura Nordeste",
+  "description": "Sistema de gestão aquícola para camarões: produção, custos de lotes, qualidade da água, vendas, documentos e relatórios para Maricultura Nordeste Ltda.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

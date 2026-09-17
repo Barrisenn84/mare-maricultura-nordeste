@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#123B45" />
+      <stop offset="100%" stop-color="#0A2228" />
+    </linearGradient>
+    <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2DD4BF" />
+      <stop offset="100%" stop-color="#0D9488" />
+    </linearGradient>
+  </defs>
+  <rect width="192" height="192" rx="42" fill="url(#bgGrad)" />
+  <g transform="translate(36, 36) scale(1.25)">
+    <!-- Sea waves icon -->
+    <path d="M10 24 Q 24 14, 38 24 T 66 24 T 94 24" fill="none" stroke="url(#waveGrad)" stroke-width="6" stroke-linecap="round" />
+    <path d="M10 44 Q 24 34, 38 44 T 66 44 T 94 44" fill="none" stroke="#5EEAD4" stroke-width="6" stroke-linecap="round" opacity="0.8" />
+    <path d="M10 64 Q 24 54, 38 64 T 66 64 T 94 64" fill="none" stroke="#99F6E4" stroke-width="6" stroke-linecap="round" opacity="0.6" />
+    <!-- Shrimp / Aquaculture element -->
+    <circle cx="76" cy="18" r="4" fill="#2DD4BF" />
+  </g>
+</svg>

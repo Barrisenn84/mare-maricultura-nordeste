@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGradMask" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#123B45" />
+      <stop offset="100%" stop-color="#0A2228" />
+    </linearGradient>
+    <linearGradient id="waveGradMask" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2DD4BF" />
+      <stop offset="100%" stop-color="#0D9488" />
+    </linearGradient>
+  </defs>
+  <!-- Full canvas fill for maskable safety zone -->
+  <rect width="512" height="512" fill="url(#bgGradMask)" />
+  <g transform="translate(128, 128) scale(2.66)">
+    <!-- Sea waves icon centered safely within 80% safe zone -->
+    <path d="M10 24 Q 24 14, 38 24 T 66 24 T 94 24" fill="none" stroke="url(#waveGradMask)" stroke-width="7" stroke-linecap="round" />
+    <path d="M10 44 Q 24 34, 38 44 T 66 44 T 94 44" fill="none" stroke="#5EEAD4" stroke-width="7" stroke-linecap="round" opacity="0.85" />
+    <path d="M10 64 Q 24 54, 38 64 T 66 64 T 94 64" fill="none" stroke="#99F6E4" stroke-width="7" stroke-linecap="round" opacity="0.7" />
+    <circle cx="78" cy="16" r="5" fill="#2DD4BF" />
+  </g>
+</svg>
